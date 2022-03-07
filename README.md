@@ -1,6 +1,6 @@
 # Deno Rate Limiter
 
-> Simple rate limiter implementation with support for different algorithm written in Typescript
+> Simple rate limiter implementation with support for different algorithms written in Typescript
 
 ## Supported Algorithms
 - [x] Token Bucket
