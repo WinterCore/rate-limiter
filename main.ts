@@ -2,6 +2,7 @@ import { serve, type ConnInfo } from "http/server.ts";
 import { initRedis } from "./lib/redis.ts";
 
 import { rateLimit as tokenBucket } from "./impl/token-bucket.ts";
+import { rateLimit as leakingBucket } from "./impl/leaking-bucket.ts";
 import { calculateKey } from "./impl/shared.ts";
 
 const PORT = 8080;
@@ -15,7 +16,7 @@ const throttler = async (_request: Request, connInfo: ConnInfo): Promise<Respons
         return new Response("Unidentifable request", { status: 400 });
     }
 
-    const info = await tokenBucket(redis, key);
+    const info = await leakingBucket(redis, key);
 
     if (info) {
         console.log('Rate limited', info);
